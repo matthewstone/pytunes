@@ -35,11 +35,6 @@ def on_end_of_track(session):
         end_of_track.set()
 
 
-def on_start_playback(session):
-    global is_playing
-    os.write(1, "Playback tsarted")
-    is_playing = True
-
 session = spotify.Session()
 session.login(config["spotify_username"], config["spotify_password"], remember_me=True)
 session.on(
@@ -50,6 +45,7 @@ session.on(spotify.SessionEvent.END_OF_TRACK, on_end_of_track)
 audio = spotify.AlsaSink(session)
 event_loop = spotify.EventLoop(session)
 event_loop.start()
+
 
 def add_to_playlist(track):
     global now_playing
