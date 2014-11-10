@@ -25,6 +25,7 @@ def search():
     tracks = [t.load() for t in search.tracks[:10]]
     return render_template('search.html', artists=artists, tracks=tracks)
 
+
 @app.route("/play")
 def play():
     is_playing = True
@@ -37,9 +38,6 @@ def play():
     return render_template('index.html', current_track=now_playing, cover=cover, is_playing=is_playing,
                            playlist=playlist)
 
-@app.route("/pause")
-def pause():
-    spotify_session.session.player.pause()
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
