@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <h2>Artists</h2>
+    {% for artist in artists %}
+        <p data-spotify-link="{{ artist.link }}">{{ artist.name }}</p>
+    {% endfor %}
+    <h2>Tracks</h2>
+    {% for track in tracks %}
+        <a href="/play?l={{ track.link }}">{{ track.name }} ({{ track.artists[0].name }})</a><br>
+    {% endfor %}
+</body>
+</html>

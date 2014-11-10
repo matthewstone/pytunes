@@ -1,0 +1,16 @@
+Flask==0.10.1
+Jinja2==2.7.3
+MarkupSafe==0.23
+Pyrex==0.9.8.6
+Werkzeug==0.9.6
+argparse==1.2.1
+cffi==0.8.6
+configobj==5.0.6
+distribute==0.6.34
+itsdangerous==0.24
+pyalsa==1.1
+pyalsaaudio==0.7
+pycparser==2.10
+pyspotify==2.0.0b3
+six==1.8.0
+wsgiref==0.1.2
