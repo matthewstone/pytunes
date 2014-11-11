@@ -20,6 +20,7 @@
             })
             $('#search').on("submit", function(e){
                 e.preventDefault();
+                $('#search-results').empty();
                 $.ajax({
                     url: "/search",
                     data: {
