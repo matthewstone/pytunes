@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import spotify_session
 
 app = Flask(__name__)
@@ -20,10 +20,19 @@ def index():
 @app.route("/search")
 def search():
     query = request.args.get('q')
-    search = spotify_session.session.search(query).load()
-    artists = [a.load() for a in search.artists[:10]]
-    tracks = [t.load() for t in search.tracks[:10]]
-    return render_template('search.html', artists=artists, tracks=tracks)
+    spotify_search = spotify_session.session.search(query).load()
+    results = {}
+    artists = []
+    tracks = []
+    for a in spotify_search.artists:
+        a.load()
+        artists.append({"name": a.name, "link": str(a.link)})
+    results["artists"] = artists
+    for t in spotify_search.tracks:
+        t.load()
+        tracks.append({"name": t.name, "artist": t.artists[0].load().name, "link": str(t.link)})
+    results["tracks"] = tracks
+    return jsonify(results)
 
 
 @app.route("/play")
