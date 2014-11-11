@@ -1,24 +1,46 @@
-<!doctype HTML>
-<head>
-<title>Spotify Server</title>
-</head>
-<body>
-<h1>Play that funky music</h1>
-
-
-    {% if is_playing %}
-        <p>Now playing: {{ current_track.name }} by {{ current_track.artists[0].name }}</p>
-        <img src="{{ cover.data_uri }}">
-        <p><b>Queued</b></p>
-        {% for item in playlist %}
-            {% if item != current_track %}
-                <p>{{ item.name }} - {{ item.artists[0].name }}</p>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-    <form action="/search">
-        <input type="text" name="q">
-        <input type="submit" value="search">
-    </form>
-</body>
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <title>Spotify Server</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Random Welcome Message</h1>
+                </div>
+            </div>
+            <div class="row">
+                    {% if is_playing %}
+                        <div class="col-md-4">
+                            <img src="{{ cover.data_uri }}">
+                        </div>
+                        <div class="col-md-8">
+                            Now playing: {{ current_track.name }} by {{ current_track.artists[0].name }}
+                        </div>
+                    {% endif %}
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p><b>Queued</b></p>
+                    {% for item in playlist %}
+                        {% if item != current_track %}
+                            <p>{{ item.name }} - {{ item.artists[0].name }}</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="/search">
+                        <input type="text" name="q">
+                        <input type="submit" value="search">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
