@@ -26,8 +26,19 @@
                         q: $("input[name=q]").val()
                     },
                     success: function(res){
-                        $.each(res.tracks, function(index, track){
-                            $('#search-results').append('<div><p>Artist: '+track.artist+'<br>Title: '+track.name+'<br><span class="glyphicon glyphicon-play-circle add-track" data-spotify-url="'+track.link+'"></span></p></div>')
+                        var tracks = res.tracks;
+                        var chunked_tracks = []
+                        for(var i = 0; i < tracks.length; i+=6){
+                            chunked_tracks.push(tracks.slice(i, i+6));
+
+                        }
+                        console.log(chunked_tracks);
+                        $.each(chunked_tracks, function(index, chunk){
+                            var row = $('<div class="row"></div>');
+                            $.each(chunk, function(index, track) {
+                                $(row).append('<div class="col-md-2"><p>'+track.artist+'<br>'+track.name+'<br><span class="glyphicon glyphicon-play-circle add-track" data-spotify-url="'+track.link+'"></span></p></div>')
+                            });
+                            $('#search-results').append(row);
                         })
                     }
                 })
@@ -70,10 +81,7 @@
                     </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12" id="search-results">
-
-                </div>
+            <div id="search-results">
             </div>
             <div class="row">
                 <div class="col-md-12">
