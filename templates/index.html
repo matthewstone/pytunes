@@ -5,6 +5,35 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+            <script>
+        $(document).ready(function(){
+            $('#search-results').on("click", '.add-track', function(){
+                $.ajax({
+                    url: "/play",
+                    data: {
+                        l: $(this).attr('data-spotify-url')
+                    },
+                    success: function(){
+                        document.location.href = document.location.href
+                    }
+                })
+            })
+            $('#search').on("submit", function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: "/search",
+                    data: {
+                        q: $("input[name=q]").val()
+                    },
+                    success: function(res){
+                        $.each(res.tracks, function(index, track){
+                            $('#search-results').append('<div><p>Artist: '+track.artist+'<br>Title: '+track.name+'<br><span class="glyphicon glyphicon-play-circle add-track" data-spotify-url="'+track.link+'"></span></p></div>')
+                        })
+                    }
+                })
+            })
+        })
+    </script>
     </head>
     <body>
         <div class="container">
@@ -35,10 +64,15 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <form action="/search">
+                    <form id="search">
                         <input type="text" name="q">
                         <input type="submit" value="search">
                     </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="search-results">
+
                 </div>
             </div>
         </div>
